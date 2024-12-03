@@ -38,7 +38,7 @@ pub fn b(input: impl BufRead) -> u32 {
         .count() as u32
 }
 
-fn check_report(report: &Vec<u32>, skip_index: Option<usize>) -> bool {
+fn check_report(report: &[u32], skip_index: Option<usize>) -> bool {
     let mut report = report.iter().copied();
     let mut i = 0;
     if skip_index == Some(0) {
@@ -46,7 +46,7 @@ fn check_report(report: &Vec<u32>, skip_index: Option<usize>) -> bool {
     }
     let mut l_prev = report.next().unwrap();
     let mut increasing = None;
-    while let Some(l_curr) = report.next() {
+    for l_curr in report {
         i += 1;
         if Some(i) == skip_index {
             continue;

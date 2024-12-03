@@ -1,8 +1,10 @@
+#![feature(let_chains)]
 use std::env::args;
 use std::io::stdin;
 
 mod day1;
 mod day2;
+mod day3;
 
 fn main() {
     let problem = match args()
@@ -14,6 +16,8 @@ fn main() {
         "1b" => day1::b,
         "2a" => day2::a,
         "2b" => day2::b,
+        "3a" => day3::a,
+        "3b" => day3::b,
         _ => panic!("Unknown day"),
     };
 
