@@ -61,7 +61,7 @@ fn parse_input(input: impl BufRead) -> (Vec<u32>, Vec<u32>) {
 
 #[cfg(test)]
 mod tests {
-    use std::io::BufReader;
+    use advent_of_code_2024::read_str;
 
     use super::*;
 
@@ -74,14 +74,14 @@ mod tests {
 ";
 
     #[test]
-    fn test_1a() {
-        let result = a(BufReader::new(EXAMPLE.as_bytes()));
+    fn test_a() {
+        let result = a(read_str(EXAMPLE));
         assert_eq!(result, 11);
     }
 
     #[test]
-    fn test_1b() {
-        let result = b(BufReader::new(EXAMPLE.as_bytes()));
+    fn test_b() {
+        let result = b(read_str(EXAMPLE));
         assert_eq!(result, 31);
     }
 }

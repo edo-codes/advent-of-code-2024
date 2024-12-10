@@ -138,21 +138,21 @@ fn read_number(string: &[u8]) -> Option<(u32, usize)> {
 
 #[cfg(test)]
 mod tests {
-    use std::io::BufReader;
+    use advent_of_code_2024::read_str;
 
     use super::*;
 
     #[test]
-    fn test_1a() {
-        let example = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
-        let result = a(BufReader::new(example.as_bytes()));
-        assert_eq!(result, 161);
+    fn test_a() {
+        let input =
+            read_str("xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))");
+        assert_eq!(a(input), 161);
     }
 
     #[test]
-    fn test_1b() {
-        let example = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
-        let result = b(BufReader::new(example.as_bytes()));
-        assert_eq!(result, 48);
+    fn test_b() {
+        let input =
+            read_str("xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))");
+        assert_eq!(b(input), 48);
     }
 }

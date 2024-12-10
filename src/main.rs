@@ -3,6 +3,7 @@ use std::env::args;
 use std::io::stdin;
 
 mod day1;
+mod day10;
 mod day2;
 mod day3;
 
@@ -18,6 +19,8 @@ fn main() {
         "2b" => day2::b,
         "3a" => day3::a,
         "3b" => day3::b,
+        "10a" => day10::a,
+        "10b" => day10::b,
         _ => panic!("Unknown day"),
     };
 

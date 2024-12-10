@@ -65,7 +65,7 @@ fn check_report(report: &[u32], skip_index: Option<usize>) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use std::io::BufReader;
+    use advent_of_code_2024::read_str;
 
     use super::*;
 
@@ -78,18 +78,21 @@ mod tests {
 ";
 
     #[test]
-    fn test_1a() {
-        let result = a(BufReader::new(EXAMPLE.as_bytes()));
-        assert_eq!(result, 2);
+    fn test_a() {
+        let input = read_str(EXAMPLE);
+        assert_eq!(a(input), 2);
     }
 
     #[test]
-    fn test_1b() {
-        let result = b(BufReader::new(EXAMPLE.as_bytes()));
-        assert_eq!(result, 4);
+    fn test_b() {
+        let input = read_str(EXAMPLE);
+        assert_eq!(b(input), 4);
+    }
 
+    #[test]
+    fn test_b_own() {
         // Safe by removing the second level, 4
-        let result = b(BufReader::new("1 4 3 4".as_bytes()));
-        assert_eq!(result, 1);
+        let input = read_str("1 4 3 4");
+        assert_eq!(b(input), 1);
     }
 }
