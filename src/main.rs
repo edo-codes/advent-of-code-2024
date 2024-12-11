@@ -1,9 +1,11 @@
 #![feature(let_chains)]
+#![feature(linked_list_cursors)]
 use std::env::args;
 use std::io::stdin;
 
 mod day1;
 mod day10;
+mod day11;
 mod day2;
 mod day3;
 
@@ -21,7 +23,8 @@ fn main() {
         "3b" => day3::b,
         "10a" => day10::a,
         "10b" => day10::b,
-        _ => panic!("Unknown day"),
+        "11a" => day11::a,
+        _ => panic!("Unknown day or part"),
     };
 
     let result = problem(stdin().lock());
