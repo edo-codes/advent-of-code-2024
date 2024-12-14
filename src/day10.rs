@@ -88,7 +88,7 @@ mod tests {
     use super::*;
     use crate::read_str;
 
-    static EXAMPLE: &str = "89010123
+    const EXAMPLE: &str = "89010123
 78121874
 87430965
 96549874
