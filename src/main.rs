@@ -1,11 +1,15 @@
 #![feature(let_chains)]
 #![feature(linked_list_cursors)]
+#![feature(iter_collect_into)]
+#![feature(never_type)]
+
 use std::env::args;
-use std::io::stdin;
+use std::io::{BufRead, BufReader, stdin};
 
 mod day1;
 mod day10;
 mod day11;
+mod day14;
 mod day2;
 mod day3;
 
@@ -24,9 +28,14 @@ fn main() {
         "10a" => day10::a,
         "10b" => day10::b,
         "11a" => day11::a,
+        "11b" => day11::b,
         _ => panic!("Unknown day or part"),
     };
 
     let result = problem(stdin().lock());
     println!("{result}");
+}
+
+pub fn read_str(input: &str) -> impl BufRead {
+    BufReader::new(input.as_bytes())
 }

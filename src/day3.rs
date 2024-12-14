@@ -1,7 +1,7 @@
 use core::str;
 use std::io::BufRead;
 
-pub fn a(mut input: impl BufRead) -> u32 {
+pub fn a(mut input: impl BufRead) -> u64 {
     let mut string = Vec::new();
     input.read_to_end(&mut string).unwrap();
 
@@ -22,7 +22,7 @@ pub fn a(mut input: impl BufRead) -> u32 {
     total
 }
 
-pub fn b(mut input: impl BufRead) -> u32 {
+pub fn b(mut input: impl BufRead) -> u64 {
     let mut string = Vec::new();
     input.read_to_end(&mut string).unwrap();
 
@@ -44,7 +44,7 @@ pub fn b(mut input: impl BufRead) -> u32 {
 }
 
 enum Instruction {
-    Mul(u32, u32),
+    Mul(u64, u64),
     Do,
     Dont,
 }
@@ -86,7 +86,7 @@ impl Iterator for InstructionReader<'_> {
     }
 }
 
-fn read_mul_instruction(string: &[u8]) -> Option<((u32, u32), usize)> {
+fn read_mul_instruction(string: &[u8]) -> Option<((u64, u64), usize)> {
     let mut j = 0;
 
     if !read_string(&string[j..], b"mul(") {
@@ -121,7 +121,7 @@ fn read_string(string: &[u8], search: &[u8]) -> bool {
     j == search.len()
 }
 
-fn read_number(string: &[u8]) -> Option<(u32, usize)> {
+fn read_number(string: &[u8]) -> Option<(u64, usize)> {
     let mut j = 0;
     while let Some(digit) = &string.get(j)
         && digit.is_ascii_digit()
@@ -138,9 +138,8 @@ fn read_number(string: &[u8]) -> Option<(u32, usize)> {
 
 #[cfg(test)]
 mod tests {
-    use advent_of_code_2024::read_str;
-
     use super::*;
+    use crate::read_str;
 
     #[test]
     fn test_a() {

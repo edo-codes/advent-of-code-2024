@@ -2,16 +2,15 @@ use std::io::BufRead;
 use std::iter::zip;
 
 // O(n log n)
-pub fn a(input: impl BufRead) -> u32 {
+pub fn a(input: impl BufRead) -> u64 {
     let (mut left, mut right) = parse_input(input);
     left.sort_unstable();
     right.sort_unstable();
-    let total_distance: u32 = zip(left, right).map(|(l, r)| l.abs_diff(r)).sum();
-    total_distance
+    zip(left, right).map(|(l, r)| l.abs_diff(r)).sum()
 }
 
 // O(n log n), brute force would be O(n²)
-pub fn b(input: impl BufRead) -> u32 {
+pub fn b(input: impl BufRead) -> u64 {
     let (mut left, mut right) = parse_input(input);
     left.sort_unstable();
     right.sort_unstable();
@@ -47,8 +46,8 @@ pub fn b(input: impl BufRead) -> u32 {
     similarity
 }
 
-fn parse_input(input: impl BufRead) -> (Vec<u32>, Vec<u32>) {
-    let (mut left, mut right): (Vec<u32>, Vec<u32>) = Default::default();
+fn parse_input(input: impl BufRead) -> (Vec<u64>, Vec<u64>) {
+    let (mut left, mut right): (Vec<u64>, Vec<u64>) = Default::default();
     for line in input.lines() {
         let line = line.unwrap();
         let mut line = line.split_ascii_whitespace();
@@ -61,9 +60,8 @@ fn parse_input(input: impl BufRead) -> (Vec<u32>, Vec<u32>) {
 
 #[cfg(test)]
 mod tests {
-    use advent_of_code_2024::read_str;
-
     use super::*;
+    use crate::read_str;
 
     static EXAMPLE: &str = "3   4
 4   3

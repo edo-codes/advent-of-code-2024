@@ -1,41 +1,72 @@
 use core::str;
-use std::collections::LinkedList;
+use std::collections::HashMap;
 use std::io::{BufRead, read_to_string};
 
-pub fn a(input: impl BufRead) -> u32 {
-    let mut stones = parse_input(input);
-    for _ in 0..25 {
-        blink(&mut stones);
-    }
-    stones.len() as u32
+pub fn a(input: impl BufRead) -> u64 {
+    let stones = parse_input(input);
+    stones.into_iter().map(|n| blink(n, 25)).sum()
 }
 
-fn parse_input(input: impl BufRead) -> LinkedList<u64> {
+pub fn b(input: impl BufRead) -> u64 {
+    let stones = parse_input(input);
+    let mut memo = HashMap::new();
+    stones
+        .into_iter()
+        .map(|n| blink_memo(n, 75, &mut memo))
+        .sum()
+}
+
+fn parse_input(input: impl BufRead) -> Vec<u64> {
+    let mut vec = Vec::<u64>::with_capacity(1_000_000_000);
     read_to_string(input)
         .unwrap()
         .split_ascii_whitespace()
-        .map(str::parse)
-        .collect::<Result<_, _>>()
-        .unwrap()
+        .map(|s| str::parse::<u64>(s).unwrap())
+        .collect_into(&mut vec);
+    vec
 }
 
-fn blink(stones: &mut LinkedList<u64>) {
-    let mut cur = stones.cursor_front_mut();
-    while let Some(n) = cur.current() {
-        let num_digits = count_digits(*n);
-        if num_digits % 2 == 0 {
-            let left = *n / 10u64.pow(num_digits / 2);
-            let right = *n % 10u64.pow(num_digits / 2);
-            *n = left;
-            cur.insert_after(right);
-            cur.move_next();
-        } else if *n == 0 {
-            *n = 1;
-        } else {
-            *n = n.checked_mul(2024).unwrap();
-        }
-        cur.move_next();
+fn blink(n: u64, times: u64) -> u64 {
+    if times == 0 {
+        return 1;
     }
+
+    if n == 0 {
+        blink(1, times - 1)
+    } else {
+        let num_digits = count_digits(n);
+        if num_digits % 2 == 0 {
+            blink(n / 10u64.pow(num_digits / 2), times - 1)
+                + blink(n % 10u64.pow(num_digits / 2), times - 1)
+        } else {
+            blink(n * 2024, times - 1)
+        }
+    }
+}
+
+fn blink_memo(n: u64, times: u32, memo: &mut HashMap<(u64, u32), u64>) -> u64 {
+    if times == 0 {
+        return 1;
+    }
+
+    if let Some(&n_mem) = memo.get(&(n, times)) {
+        return n_mem;
+    }
+    let r = {
+        if n == 0 {
+            blink_memo(1, times - 1, memo)
+        } else {
+            let num_digits = count_digits(n);
+            if num_digits % 2 == 0 {
+                blink_memo(n / 10u64.pow(num_digits / 2), times - 1, memo)
+                    + blink_memo(n % 10u64.pow(num_digits / 2), times - 1, memo)
+            } else {
+                blink_memo(n * 2024, times - 1, memo)
+            }
+        }
+    };
+    memo.insert((n, times), r);
+    r
 }
 
 fn count_digits(mut n: u64) -> u32 {
@@ -51,13 +82,20 @@ fn count_digits(mut n: u64) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use advent_of_code_2024::read_str;
-
     use super::*;
+    use crate::read_str;
+
+    static EXAMPLE: &str = "125 17";
 
     #[test]
     fn test_a() {
-        let input = read_str("125 17");
+        let input = read_str(EXAMPLE);
         assert_eq!(a(input), 55312);
+    }
+
+    #[test]
+    fn test_b() {
+        let input = read_str(EXAMPLE);
+        assert_eq!(b(input), 65601038650482);
     }
 }

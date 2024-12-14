@@ -1,7 +1,7 @@
 use std::io::BufRead;
 
 // O(#reports * #levels)
-pub fn a(input: impl BufRead) -> u32 {
+pub fn a(input: impl BufRead) -> u64 {
     input
         .lines()
         .filter(|line| {
@@ -12,11 +12,11 @@ pub fn a(input: impl BufRead) -> u32 {
                 .collect();
             check_report(&report, None)
         })
-        .count() as u32
+        .count() as _
 }
 
 // O(#reports * #levels²)
-pub fn b(input: impl BufRead) -> u32 {
+pub fn b(input: impl BufRead) -> u64 {
     input
         .lines()
         .filter(|line| {
@@ -35,7 +35,7 @@ pub fn b(input: impl BufRead) -> u32 {
             }
             false
         })
-        .count() as u32
+        .count() as _
 }
 
 fn check_report(report: &[u32], skip_index: Option<usize>) -> bool {
@@ -65,9 +65,8 @@ fn check_report(report: &[u32], skip_index: Option<usize>) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use advent_of_code_2024::read_str;
-
     use super::*;
+    use crate::read_str;
 
     static EXAMPLE: &str = "7 6 4 2 1
 1 2 7 8 9

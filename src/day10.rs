@@ -5,12 +5,12 @@ use itertools::Itertools;
 
 type TopoMap = Vec<Vec<u8>>;
 
-pub fn a(input: impl BufRead) -> u32 {
+pub fn a(input: impl BufRead) -> u64 {
     let map = parse_input(input);
     trailheads(&map).map(|(x, y)| score_trail(&map, x, y)).sum()
 }
 
-pub fn b(input: impl BufRead) -> u32 {
+pub fn b(input: impl BufRead) -> u64 {
     let map = parse_input(input);
     trailheads(&map).map(|(x, y)| rate_trail(&map, x, y)).sum()
 }
@@ -38,7 +38,7 @@ fn trailheads(map: &TopoMap) -> impl Iterator<Item = (usize, usize)> {
         .filter(|(x, y)| map[*y][*x] == 0)
 }
 
-fn score_trail(map: &TopoMap, x: usize, y: usize) -> u32 {
+fn score_trail(map: &TopoMap, x: usize, y: usize) -> u64 {
     fn find_summits(map: &TopoMap, x: usize, y: usize, summits: &mut HashSet<(usize, usize)>) {
         let current_height = map[y][x];
         if current_height == 9 {
@@ -52,10 +52,10 @@ fn score_trail(map: &TopoMap, x: usize, y: usize) -> u32 {
 
     let mut summits = HashSet::new();
     find_summits(map, x, y, &mut summits);
-    summits.len() as u32
+    summits.len() as _
 }
 
-fn rate_trail(map: &TopoMap, x: usize, y: usize) -> u32 {
+fn rate_trail(map: &TopoMap, x: usize, y: usize) -> u64 {
     let current_height = map[y][x];
     if current_height == 9 {
         return 1;
@@ -85,9 +85,8 @@ fn walk_up(map: &TopoMap, x: usize, y: usize) -> impl Iterator<Item = (usize, us
 
 #[cfg(test)]
 mod tests {
-    use advent_of_code_2024::read_str;
-
     use super::*;
+    use crate::read_str;
 
     static EXAMPLE: &str = "89010123
 78121874
