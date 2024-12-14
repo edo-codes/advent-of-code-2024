@@ -85,7 +85,7 @@ mod tests {
     use super::*;
     use crate::read_str;
 
-    static EXAMPLE: &str = "125 17";
+    const EXAMPLE: &str = "125 17";
 
     #[test]
     fn test_a() {

@@ -68,7 +68,7 @@ mod tests {
     use super::*;
     use crate::read_str;
 
-    static EXAMPLE: &str = "7 6 4 2 1
+    const EXAMPLE: &str = "7 6 4 2 1
 1 2 7 8 9
 9 7 6 2 1
 1 3 2 4 5

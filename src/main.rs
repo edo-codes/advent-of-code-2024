@@ -1,7 +1,7 @@
 #![feature(let_chains)]
 #![feature(linked_list_cursors)]
 #![feature(iter_collect_into)]
-#![feature(never_type)]
+#![feature(try_blocks)]
 
 use std::env::args;
 use std::io::{BufRead, BufReader, stdin};
@@ -29,6 +29,8 @@ fn main() {
         "10b" => day10::b,
         "11a" => day11::a,
         "11b" => day11::b,
+        "14a" => day14::a,
+        "14b" => day14::b,
         _ => panic!("Unknown day or part"),
     };
 
