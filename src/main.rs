@@ -12,6 +12,7 @@ mod day11;
 mod day14;
 mod day2;
 mod day22;
+mod day24;
 mod day3;
 
 fn main() {
@@ -33,6 +34,7 @@ fn main() {
         "14a" => day14::a,
         "14b" => day14::b,
         "22a" => day22::a,
+        "24a" => day24::a,
         _ => panic!("Unknown day or part"),
     };
 
